@@ -35,11 +35,12 @@ def calst(X, num):
     for k in range(0, 3):
         t.append(X[(num + k) % 4])
     maxnum = max(t)
-    #print("t before---------", t)
+    # print("t before---------", t)
     for loopv in range(0, 3):
         t[loopv] = t[loopv] / maxnum
-    #print("t after---------", t)
+    # print("t after---------", t)
     temp = SVMmodel.predict([t])
+    # print("prediction catigory--------",temp)
     if temp[0] == '1':
         stemp = 25
     elif temp[0] == '2':
@@ -82,9 +83,10 @@ TrafficType = input("Stataic(s) or Dynamic(d)?")
 # main loop
 while k < 50:
     k += 1
+    print("---------------------------------------------------------")
     print("")
     print("")
-    print("After cycle ------------", k - 1)
+    print("------------------After cycle", k - 1, "---------------------")
     # print("cars-------", cars)
     # print(randint(2,3))
     print("cars elapsed--------------", carsElapsed)
@@ -95,15 +97,15 @@ while k < 50:
     print("Cars in lane4-------------", len(lane4))
     lenofLane1 += len(lane1)
     # print("average length of lane1---", lenofLane1 / k)
-    combinedWeight =0
-    combinedElpsed =0
+    combinedWeight = 0
+    combinedElpsed = 0
     if k > 1:
         for l in range(0, 4):
             avgWeighttime[l] = weightTime[l] / carsElapsed[l]
             # avgofavgTime[l] += avgWeighttime[l]
             # print("avg of avg ", avgofavgTime[l] / k)
-            combinedWeight+=weightTime[l]
-            combinedElpsed+=carsElapsed[l]
+            combinedWeight += weightTime[l]
+            combinedElpsed += carsElapsed[l]
         print("combined weight time------", combinedWeight / combinedElpsed)
     print("average wait time per Car-", avgWeighttime)
 
@@ -114,10 +116,10 @@ while k < 50:
         listOfCars = [len(x) for x in AllLane]
         if TrafficType == "d" and k > 1:
             st = calst(listOfCars, i)
-
+        # print("st-------",st)
         for j in range(0, st):
             if AllLane[i]:
-                rm = AllLane[i].pop()
+                rm = AllLane[i].pop()  # removing car from lane
             carsElapsed[i] += 1
             weightTime[i] += rm  # adding the weighting time of elapsed cars
 
@@ -127,6 +129,6 @@ while k < 50:
                 ls[g] += st
         # adding cars in each lane
         for ls in AllLane:
-            randomNum0 = randint(4, 6)
+            randomNum0 = randint(4, 5)
             for _ in range(0, randomNum0):
-                ls.insert(0, 0)
+                ls.insert(0, st/randomNum0)
